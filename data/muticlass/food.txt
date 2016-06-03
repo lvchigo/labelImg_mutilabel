@@ -1,0 +1,10 @@
+food.barbecue
+food.cake
+food.coffee
+food.cook
+food.fruit
+food.hotpot
+food.icecream
+food.pizza
+food.sushi
+food.other

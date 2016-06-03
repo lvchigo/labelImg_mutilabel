@@ -1,0 +1,7 @@
+electronics.camera
+electronics.cellphone
+electronics.cursormouse
+electronics.keyboard
+electronics.monitor
+electronics.notebook
+electronics.other

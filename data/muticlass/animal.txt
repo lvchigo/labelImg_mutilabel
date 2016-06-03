@@ -1,0 +1,9 @@
+animal.bird
+animal.cat
+animal.cow
+animal.dog
+animal.horse
+animal.panda
+animal.rabbit
+animal.sheep
+animal.other

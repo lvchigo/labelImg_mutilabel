@@ -1,0 +1,17 @@
+goods.bag
+goods.ball
+goods.book
+goods.bottle
+goods.clock
+goods.clothes
+goods.cosmetics
+goods.cup
+goods.drawbar
+goods.flower
+goods.glass
+goods.guitar
+goods.hat
+goods.jewelry
+goods.puppet
+goods.shoe
+goods.other

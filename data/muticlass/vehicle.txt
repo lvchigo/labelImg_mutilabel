@@ -1,0 +1,8 @@
+vehicle.airplane
+vehicle.bicycle
+vehicle.boat
+vehicle.bus
+vehicle.car
+vehicle.motorbike
+vehicle.train
+vehicle.other

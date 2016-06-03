@@ -1,0 +1,8 @@
+animal
+electronics
+food
+furniture
+goods
+person
+vehicle
+other

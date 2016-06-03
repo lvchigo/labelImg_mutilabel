@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<annotation>
+	<folder>img</folder>
+	<filename>7</filename>
+	<path>/home/chigo/working/labelImg-master/img/7.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>320</width>
+		<height>320</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>other.sticker</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>34</xmin>
+			<ymin>93</ymin>
+			<xmax>183</xmax>
+			<ymax>220</ymax>
+		</bndbox>
+	</object>
+</annotation>

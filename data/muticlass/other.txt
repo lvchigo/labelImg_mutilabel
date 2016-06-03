@@ -1,0 +1,5 @@
+other.2dcode
+other.logo
+other.sticker
+other.text
+other.other
