@@ -2,7 +2,7 @@
 <annotation>
 	<folder>img</folder>
 	<filename>6</filename>
-	<path>/home/chigo/working/labelImg-master/img/6.jpg</path>
+	<path>/home/chigo/working/labelImg_mutilabel/img/6.jpg</path>
 	<source>
 		<database>Unknown</database>
 	</source>
@@ -34,6 +34,18 @@
 			<ymin>178</ymin>
 			<xmax>99</xmax>
 			<ymax>198</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>person.face</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>148</xmin>
+			<ymin>104</ymin>
+			<xmax>188</xmax>
+			<ymax>143</ymax>
 		</bndbox>
 	</object>
 </annotation>

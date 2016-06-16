@@ -1,6 +1,6 @@
 furniture.bed
 furniture.chair
-furniture.diningtable
 furniture.pottedplant
 furniture.sofa
+furniture.table
 furniture.other

@@ -5,6 +5,7 @@ import os.path
 import re
 import sys
 import subprocess
+import shutil
 
 from functools import partial
 from collections import defaultdict
@@ -54,6 +55,7 @@ class MainWindow(QMainWindow, WindowMixin):
         self.setWindowTitle(__appname__)
         # Save as Pascal voc xml
         self.defaultSaveDir = None
+        self.defaultSaveTmpDir = None
         self.usingPascalVocFormat = True
         if self.usingPascalVocFormat:
             LabelFile.suffix = '.xml'
@@ -553,6 +555,8 @@ class MainWindow(QMainWindow, WindowMixin):
                 shape.line_color = QColor(*line_color)
             if fill_color:
                 shape.fill_color = QColor(*fill_color)
+            #add by chigo
+            #self.shapeSelectionChanged(True)
         self.canvas.loadShapes(s)
 
     def saveLabels(self, filename):
@@ -859,12 +863,19 @@ class MainWindow(QMainWindow, WindowMixin):
             '%s - Open Directory' % __appname__, path,  QFileDialog.ShowDirsOnly
                                                 | QFileDialog.DontResolveSymlinks))
 
+        print ('lastOpenDir:{}').format(self.lastOpenDir)
         if dirpath is not None and len(dirpath) > 1:
             self.lastOpenDir = dirpath
             #add by chigo
             self.defaultSaveDir = dirpath
             print ('defaultSaveDir:{}').format(self.defaultSaveDir)
+            self.defaultSaveTmpDir = os.path.join(str(dirpath), 'tmp')
+            if not os.path.exists(self.defaultSaveTmpDir):
+                os.makedirs(self.defaultSaveTmpDir)
+            print ('defaultSaveTmpDir:{}').format(self.defaultSaveTmpDir)
 
+        #add by chigo
+        self.filename = None #clear filename
         self.dirname = dirpath
         self.mImgList = self.scanAllImages(dirpath)
         self.openNextImg()
@@ -938,23 +949,36 @@ class MainWindow(QMainWindow, WindowMixin):
 
         #print 'handle the image:' + self.filename
         imgFileName = os.path.basename(self.filename)
-        savedFileName = os.path.splitext(imgFileName)[0] + LabelFile.suffix
-        savedPath = os.path.join(str(self.defaultSaveDir), savedFileName)
+        xmlFileName = os.path.splitext(imgFileName)[0] + LabelFile.suffix
+        svXmlFile = os.path.join(str(self.defaultSaveDir), xmlFileName)
+        #print ('imgFileName:{}!!').format(imgFileName)
+        #print ('xmlFileName:{}!!').format(xmlFileName)
+        #print ('savedPath:{}!!').format(svXmlFile)
+
+        if self.defaultSaveTmpDir is not None and len(self.defaultSaveTmpDir) > 1:
+            imgTmpFileName = os.path.join(str(self.defaultSaveTmpDir), imgFileName)
+            xmlTmpFileName = os.path.join(str(self.defaultSaveTmpDir), xmlFileName)
 
         #add by chigo
         if self.hasLabels():
             if self.defaultSaveDir is not None and len(str(self.defaultSaveDir)):
-                self._saveFile(savedPath)
-                self.openNextImg()
+                self._saveFile(svXmlFile)
             else:
                 self._saveFile(self.filename if self.labelFile\
                                          else self.saveFileDialog())
+
+            #cp img/xml to tmppath
+            if self.defaultSaveTmpDir is not None and len(self.defaultSaveTmpDir) > 1:
+                shutil.copyfile(self.filename, imgTmpFileName)
+                shutil.copyfile(svXmlFile, xmlTmpFileName)
+            self.openNextImg()
         else:
-            removeXmlFile = savedPath
+            removeXmlFile = svXmlFile
             if os.path.isfile(removeXmlFile): 
                 os.remove(removeXmlFile)
                 print ('remove image:{}!!').format(self.filename)
                 self.openNextImg()
+       
 
     def saveFileAs(self, _value=False):
         assert not self.image.isNull(), "cannot save empty image"
