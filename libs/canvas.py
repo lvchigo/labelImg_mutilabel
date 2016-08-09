@@ -123,15 +123,19 @@ class Canvas(QWidget):
 
         # Polygon/Vertex moving.
         if Qt.LeftButton & ev.buttons():
+            #move rect-point
             if self.selectedVertex():
                 self.boundedMoveVertex(pos)
                 self.shapeMoved.emit()
                 self.repaint()
+                #print ('mouseMoveEvent:selectedVertex')
+            #move rect-shape
             elif self.selectedShape and self.prevPoint:
                 self.overrideCursor(CURSOR_MOVE)
                 self.boundedMoveShape(self.selectedShape, pos)
                 self.shapeMoved.emit()
                 self.repaint()
+                #print ('mouseMoveEvent:selectedShape')
             return
 
         # Just hovering over the canvas, 2 posibilities:
@@ -172,6 +176,7 @@ class Canvas(QWidget):
         pos = self.transformPos(ev.posF())
         if ev.button() == Qt.LeftButton:
             if self.drawing():
+                #show drawing result
                 if self.current and self.current.reachMaxPoints() is False:
                     initPos = self.current[0]
                     minX = initPos.x()
@@ -183,17 +188,24 @@ class Canvas(QWidget):
                     self.current.addPoint(targetPos)
                     self.current.addPoint(QPointF(minX, maxY))
                     self.current.addPoint(initPos)
+                    #print ('Click & drag to move point 2!!')
                     self.line[0] = self.current[-1]
                     if self.current.isClosed():
                         self.finalise()
+
+                #show drawing rect
                 elif not self.outOfPixmap(pos):
                     self.current = Shape()
                     self.current.addPoint(pos)
                     self.line.points = [pos, pos]
                     self.setHiding()
+                    #print ('Click & drag to move point 1!!')
                     self.drawingPolygon.emit(True)
                     self.update()
+
+            #show rect-point
             else:
+                #print ('Click & drag to move point 3!!')
                 self.selectShapePoint(pos)
                 self.prevPoint = pos
                 self.repaint()
@@ -382,6 +394,7 @@ class Canvas(QWidget):
             if (shape.selected or not self._hideBackround) and self.isVisible(shape):
                 shape.fill = shape.selected or shape == self.hShape
                 shape.paint(p)
+                #print ('paintEvent')
         if self.current:
             self.current.paint(p)
             self.line.paint(p)
@@ -399,6 +412,7 @@ class Canvas(QWidget):
             brush = QBrush(Qt.BDiagPattern)
             p.setBrush(brush)
             p.drawRect(leftTop.x(), leftTop.y(), rectWidth, rectHeight)
+            #print ('drawRect:{}_{}_{}_{}').format(leftTop.x(), leftTop.y(), rectWidth, rectHeight)
 
         p.end()
 
